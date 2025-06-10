@@ -25,17 +25,23 @@ connectDB()
 const server = express()
 
 // Permitir conexiones
-const corsOptions : CorsOptions = {
-    origin: function(origin, callback) {
-        if(origin === process.env.FRONTEND_URL){
-            callback(null, true)
-        }else{
-            console.error(`🚫 CORS bloqueado: ${origin}`);
-            callback(new Error('Error de cors'))
-        }
-    },
-    credentials: true
-}
+const whitelist = [
+  process.env.FRONTEND_URL,
+  'http://localhost:5173'
+];
+
+const corsOptions: CorsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.error(`🚫 CORS bloqueado: ${origin}`);
+      callback(new Error('Error de cors'));
+    }
+  },
+  credentials: true,
+};
+
 server.use(cors(corsOptions))
 
 // Leer datos de formularios
