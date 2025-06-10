@@ -32,7 +32,8 @@ const corsOptions : CorsOptions = {
         }else{
             callback(new Error('Error de cors'))
         }
-    }
+    },
+    credentials: true
 }
 server.use(cors(corsOptions))
 
