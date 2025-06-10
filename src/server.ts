@@ -30,6 +30,7 @@ const corsOptions : CorsOptions = {
         if(origin === process.env.FRONTEND_URL){
             callback(null, true)
         }else{
+            console.error(`🚫 CORS bloqueado: ${origin}`);
             callback(new Error('Error de cors'))
         }
     },
